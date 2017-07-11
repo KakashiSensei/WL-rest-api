@@ -25,7 +25,7 @@ exports.getOne = function (req, res, next) {
     } else {
         let id = req.params.id;
         let accessToken = req.query.accessToken;
-        this.getFacebookData(id, accessToken)
+        getFacebookData(id, accessToken)
             .then((data) => {
                 let facebookData = new FacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] });
                 facebookData.save();
@@ -41,15 +41,15 @@ exports.post = function (req, res, next) {
     if (FacebookData.find({ _id: id })) {
         FacebookData.find({ _id: id }).remove()
             .then(() => {
-                this.getFacebookData(id, accessToken)
+                getFacebookData(id, accessToken)
                     .then((data) => {
-                        this.insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
+                        insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
                     })
             })
     } else {
-        this.getFacebookData(id, accessToken)
+        getFacebookData(id, accessToken)
             .then((data) => {
-                this.insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
+                insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
 
             })
     }
@@ -65,10 +65,10 @@ exports.get = function (req, res, next) {
 exports.updateFacebookData = function (id, accessToken) {
     return FacebookData.find({ _id: id }).remove()
         .then(() => {
-            return this.getFacebookData(id, accessToken);
+            return getFacebookData(id, accessToken);
         })
         .then((data) => {
-            return this.insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] });
+            return insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] });
         })
 }
 
@@ -91,11 +91,11 @@ let getFacebookData = (facebookID, accessToken) => {
     let promiseArray = [];
 
     // get about me
-    promiseArray.push(this.aboutMe(facebookID, accessToken));
+    promiseArray.push(aboutMe(facebookID, accessToken));
     // get albums detail
-    promiseArray.push(this.albumDetail(facebookID, accessToken));
+    promiseArray.push(albumDetail(facebookID, accessToken));
     // get friend detail
-    promiseArray.push(this.friendsDetail(facebookID, accessToken));
+    promiseArray.push(friendsDetail(facebookID, accessToken));
 
     return Promise.all(promiseArray);
 }
