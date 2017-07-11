@@ -1,0 +1,16 @@
+image: node:latest
+
+stages:
+  - production
+
+production:
+  type: deploy
+  stage: production
+  image: ruby:latest
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=white-light-rest-api --api-key=1d02deaf-bd3a-437c-9139-3353d4630468
+  only:
+    - master
