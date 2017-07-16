@@ -33,6 +33,7 @@
     "superagent-bluebird-promise": "^4.2.0",
     "superagent-no-cache": "^0.1.1",
     "superagent-prefix": "^0.0.2",
+    "tinify": "^1.5.0",
     "wl-parser": "^1.0.7"
   },
   "devDependencies": {

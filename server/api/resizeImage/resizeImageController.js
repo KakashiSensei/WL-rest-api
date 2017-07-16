@@ -1,41 +1,21 @@
-var AWS = require('aws-sdk');
-var Jimp = require("jimp");
-
-AWS.config.update({
-    accessKeyId: process.env.S3_ACCESS_KEY,
-    secretAccessKey: process.env.S3_SECRET_KEY,
-    region: process.env.S3_HOSTED_REGION
-});
-
-var s3Bucket = new AWS.S3();
+import tinify from 'tinify';
 
 exports.resizeImage = function (req, res, next) {
-    console.log("Inisde sharp", req.body);
-    Jimp.read(req.body.url)
-        .then(function (image) {
-            image.resize(300, 200)
-                .getBuffer(Jimp.MIME_PNG, function (err, buffer) {
-                    var stream = {
-                        Bucket: "whitelight-questions",
-                        Key: `introImage${Date.now()}.png`,
-                        ACL: 'public-read',
-                        Body: buffer,
-                    };
-                    s3Bucket.upload(stream, (err, data) => {
-                        console.log("Image uploaded to s3");
-                        if (err) {
-                            console.log(err);
-                            console.log('Error uploading data: ', data);
-                            next(err);
-                        } else {
-                            //delete local file
-                            res.json(data);
-                            console.log('succesfully uploaded the image!', data);
-                        }
-                    });
-                })
-        })
-        .catch(function (err) {
-            next(new Error("Image processing failed"));
-        })
+    tinify.key = process.env.TINY_PNG_API_KEY;
+
+    let source = tinify.fromUrl(req.body.url);
+    let resized = source.resize({
+        method: "cover",
+        width: 300,
+        height: 200
+    });
+    resized.store({
+        service: "s3",
+        aws_access_key_id: process.env.S3_ACCESS_KEY,
+        aws_secret_access_key: process.env.S3_SECRET_KEY,
+        region: process.env.S3_HOSTED_REGION,
+        path: `whitelight-questions/introImage${Date.now()}.png`
+    }).meta().then((meta) => {
+        res.json(meta);
+    })
 }
