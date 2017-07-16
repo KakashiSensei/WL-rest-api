@@ -43,18 +43,29 @@ exports.params = function (req, res, next, id) {
 
 exports.get = function (req, res, next) {
     let perPage = req.query.pp;
-    let pageNumber = +req.query.pn - 1;
-    Game.count({}, (err, count)=>{
-        Game.find({}).skip(pageNumber * perPage).limit(perPage)
+    let pageNumber = req.query.pn;
+    if (perPage && pageNumber) {
+        perPage = +perPage;
+        pageNumber = +pageNumber - 1;
+        Game.count({}, (err, count) => {
+            Game.find({}).skip(pageNumber * perPage).limit(perPage)
+                .then((games) => {
+                    let data = {};
+                    data.items = games;
+                    data.count = count;
+                    res.json(data);
+                }, function (err) {
+                    next(err);
+                })
+        });
+    } else {
+        Game.find({})
             .then((games) => {
-                let data = {};
-                data.items = games;
-                data.count = count;
-                res.json(data);
-            }, function (err) {
+                res.json(games);
+            }, (err) => {
                 next(err);
             })
-    });
+    }
 }
 
 exports.post = function (req, res, next) {

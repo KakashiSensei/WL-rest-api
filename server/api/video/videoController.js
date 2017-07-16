@@ -20,18 +20,27 @@ exports.params = function (req, res, next, id) {
 exports.get = function (req, res, next) {
     let perPage = req.query.pp;
     let pageNumber = +req.query.pn - 1;
-    Video.count({}, (err, count)=>{
-        Video.find({}).skip(pageNumber * perPage).limit(perPage)
+    if (perPage && pageNumber) {
+        Video.count({}, (err, count) => {
+            Video.find({}).skip(pageNumber * perPage).limit(perPage)
+                .then((videos) => {
+                    let data = {};
+                    data.items = videos;
+                    data.count = count;
+                    res.json(data);
+                }, function (err) {
+                    next(err);
+                })
+        });
+    } else {
+        Video.find({})
             .then((videos) => {
-                let data = {};
-                data.items = videos;
-                data.count = count;
-                res.json(data);
-            }, function (err) {
+                res.json(videos);
+            }, (err) => {
                 next(err);
             })
-    });
-    
+    }
+
 }
 
 exports.post = function (req, res, next) {
@@ -69,5 +78,5 @@ exports.deleteOne = function (req, res, next) {
 }
 
 exports.postOne = function (req, res, next) {
-    
+
 }
