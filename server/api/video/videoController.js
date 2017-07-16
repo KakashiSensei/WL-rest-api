@@ -19,9 +19,11 @@ exports.params = function (req, res, next, id) {
 
 exports.get = function (req, res, next) {
     let perPage = req.query.pp;
-    let pageNumber = +req.query.pn - 1;
+    let pageNumber = req.query.pn;
     if (perPage && pageNumber) {
         Video.count({}, (err, count) => {
+            perPage = +perPage;
+            pageNumber = +pageNumber - 1;
             Video.find({}).skip(pageNumber * perPage).limit(perPage)
                 .then((videos) => {
                     let data = {};
