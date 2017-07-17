@@ -142,7 +142,7 @@ exports.postOne = function (req, res, next) {
             childProcess.execFile(binPath, childArgs, (err, stdout, stderr) => {
                 var data = fs.readFileSync(fileName);
                 var stream = {
-                    Bucket: "whitelightimages",
+                    Bucket: process.env.QUIZ_IMAGE,
                     Key: fileName,
                     ACL: 'public-read',
                     Body: data,

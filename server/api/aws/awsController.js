@@ -12,7 +12,7 @@ exports.get = function (req, res, next) {
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
     const s3Params = {
-        Bucket: 'whitelight-questions',
+        Bucket: process.env.QUESTION_IMAGE,
         Key: fileName,
         Expires: 60 * 20,
         ContentType: fileType,

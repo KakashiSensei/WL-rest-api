@@ -14,7 +14,7 @@ exports.resizeImage = function (req, res, next) {
         aws_access_key_id: process.env.S3_ACCESS_KEY,
         aws_secret_access_key: process.env.S3_SECRET_KEY,
         region: process.env.S3_HOSTED_REGION,
-        path: `whitelight-questions/introImage${Date.now()}.png`
+        path: `${process.env.QUESTION_IMAGE}/introImage${Date.now()}.png`
     }).meta().then((meta) => {
         res.json(meta);
     })
