@@ -133,7 +133,7 @@ exports.postOne = function (req, res, next) {
             var newDom = arrayOutput[0];
             var newOutputDom = arrayOutput[1];
             var fileNameData = Date.now();
-            var fileName = "image" + fileNameData + ".png";
+            var fileName = "image" + fileNameData + ".jpg";
             var childArgs = [
                 path.join(__dirname, '../../../makeImage.js'),
                 newDom,
@@ -146,7 +146,7 @@ exports.postOne = function (req, res, next) {
                     Key: fileName,
                     ACL: 'public-read',
                     Body: data,
-                    ContentType: 'image/png'
+                    ContentType: 'image/jpg'
                 };
                 s3Bucket.upload(stream, (err, data) => {
                     console.log("Image uploaded to s3");

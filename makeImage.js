@@ -11,7 +11,7 @@ var fileName = system.args[2];
 page.settings.localToRemoteUrlAccessEnabled = true;
 page.settings.webSecurityEnabled = false;
 page.onLoadFinished = function () {
-    page.render(fileName, { format: 'png', quality: '10' });
+    page.render(fileName, { format: 'jpg', quality: '100' });
     t = Date.now() - t
     console.log("Rendering time " + t + " msec");
     phantom.exit();

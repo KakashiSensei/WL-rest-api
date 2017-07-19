@@ -18,4 +18,7 @@ exports.getOne = function (req, res, next) {
         .then((data) => {
             return res.json(data);
         })
+        .catch(()=>{
+            return next(new Error(`No recommended game found for id: ${id}`));
+        })
 }
