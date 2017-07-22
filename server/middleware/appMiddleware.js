@@ -10,7 +10,7 @@ module.exports = function (app) {
         next();
     });
     app.use(morgan('dev'));
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
+    app.use(bodyParser.json({limit: '5mb'}));
     app.use(cors());
 }

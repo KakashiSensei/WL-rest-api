@@ -1,1 +1,1 @@
-web: node index.js
+web: heroku buildpacks:add --index 1 https://github.com/ello/heroku-buildpack-imagemagick.git && node index.js
