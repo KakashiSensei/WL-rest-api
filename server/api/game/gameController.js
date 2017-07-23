@@ -117,6 +117,7 @@ exports.postOne = function (req, res, next) {
     //get the facebook details
     facebookController.updateFacebookData(userID, accessToken)
         .then((facebookData) => {
+            console.log("Inside facebookData");
             return Game.findById(questionID)
                 .then((game) => {
                     var dom = game.dom;
@@ -130,6 +131,7 @@ exports.postOne = function (req, res, next) {
                 })
         })
         .then((arrayOutput) => {
+            console.log("inside array output");
             var newDom = arrayOutput[0];
             var newOutputDom = arrayOutput[1];
             var fileNameData = Date.now();
@@ -140,6 +142,7 @@ exports.postOne = function (req, res, next) {
                 fileName
             ]
             childProcess.execFile(binPath, childArgs, (err, stdout, stderr) => {
+                console.log("Inside python responce");
                 var data = fs.readFileSync(fileName);
                 var stream = {
                     Bucket: process.env.QUIZ_IMAGE,
