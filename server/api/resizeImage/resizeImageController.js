@@ -35,7 +35,7 @@ exports.resizeImage = function (req, res, next) {
                         pos += data[i].length;
                     }
                     gm(buf)
-                        .toBuffer('JPG',(err, buffer) => {
+                        .toBuffer('jpeg',(err, buffer) => {
                             if (err) return next(err);
                             let source = tinify.fromBuffer(buffer);
                             let resized = source.resize({
