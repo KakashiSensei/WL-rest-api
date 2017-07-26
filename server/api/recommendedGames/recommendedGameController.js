@@ -14,11 +14,14 @@ exports.params = function (req, res, next, id) {
 }
 
 exports.getOne = function (req, res, next) {
-    Game.find({ _id: { $ne: req.game._id } })
-        .then((data) => {
-            return res.json(data);
-        })
-        .catch(()=>{
-            return next(new Error(`No recommended game found for id: ${id}`));
-        })
+    let num = +req.query.num;
+    Game.count({}, (err, count) => {
+        let skip = Math.floor((count - 1) / num) - 1;
+        Game.find({ _id: { $ne: req.game._id } }).skip(skip * num).limit(num)
+            .then((data) => {
+                res.json(data);
+            }, function (err) {
+                next(err);
+            })
+    });
 }
