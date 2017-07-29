@@ -6,6 +6,10 @@ var GameSchema = new Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: true
+    },
     introImage: {
         type: String,
         required: true

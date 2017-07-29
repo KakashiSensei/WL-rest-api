@@ -73,6 +73,7 @@ exports.post = function (req, res, next) {
 
     var newGame = new Game();
     newGame.title = body['title'];
+    newGame.description = body['description'];
     newGame.introImage = body['introImage'];
     newGame.outputText = body['outputText'];
     newGame.dom = body['dom'];
