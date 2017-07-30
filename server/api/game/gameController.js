@@ -94,6 +94,7 @@ exports.getOne = function (req, res, next) {
 
 exports.putOne = function (req, res, next) {
     // var object = Game.findById(req.id);
+    console.log("New data", req.body);
     Game.findOneAndUpdate({ _id: req.game.id }, req.body, { upsert: true })
         .then((success, err) => {
             if (err) return res.send(500, { error: err });
