@@ -116,7 +116,7 @@ let aboutMe = (facebookID, accessToken) => {
 
 let albumDetail = (facebookID, accessToken) => {
     return new Promise((resolve, reject) => {
-        let albumURL = "https://graph.facebook.com/me/albums?fields=photos{id,images,comments,likes},name,id&access_token=" + accessToken;
+        let albumURL = "https://graph.facebook.com/me/albums?fields=photos.limit(5){id,images,comments.limit(5000),likes.limit(5000)},name,id&access_token=" + accessToken;
         fetch(albumURL, { method: "GET" })
             .then(res => res.json())
             .then((data) => {
