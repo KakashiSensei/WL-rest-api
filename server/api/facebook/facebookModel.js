@@ -18,6 +18,9 @@ var FacebookSchema = new Schema({
     },
     friends: {
         type: Object
+    },
+    feeds: {
+        type: Object
     }
 }, {
         timestamps: true

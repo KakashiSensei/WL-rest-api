@@ -43,13 +43,13 @@ exports.post = function (req, res, next) {
             .then(() => {
                 getFacebookData(id, accessToken)
                     .then((data) => {
-                        insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
+                        insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2], feeds: data[3] }, res);
                     })
             })
     } else {
         getFacebookData(id, accessToken)
             .then((data) => {
-                insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] }, res);
+                insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2], feeds: data[3] }, res);
 
             })
     }
@@ -68,7 +68,7 @@ exports.updateFacebookData = function (id, accessToken) {
             return getFacebookData(id, accessToken);
         })
         .then((data) => {
-            return insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] });
+            return insertFacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2], feeds: data[3] });
         })
 }
 
@@ -96,6 +96,8 @@ let getFacebookData = (facebookID, accessToken) => {
     promiseArray.push(albumDetail(facebookID, accessToken));
     // get friend detail
     promiseArray.push(friendsDetail(facebookID, accessToken));
+    // get feed detail
+    promiseArray.push(feedData(facebookID, accessToken));
 
     return Promise.all(promiseArray);
 }
@@ -118,6 +120,20 @@ let albumDetail = (facebookID, accessToken) => {
     return new Promise((resolve, reject) => {
         let albumURL = "https://graph.facebook.com/me/albums?fields=photos.limit(5){id,images,comments.limit(5000),likes.limit(5000)},name,id&access_token=" + accessToken;
         fetch(albumURL, { method: "GET" })
+            .then(res => res.json())
+            .then((data) => {
+                return resolve(data)
+            })
+            .catch((err) => {
+                return reject(err);
+            })
+    })
+}
+
+let feedData = (facebookID, accessToken) => {
+    return new Promise((resolve, reject) => {
+        let feedURL = "https://graph.facebook.com/me/feed?fields=created_time,id,from,story_tags&limit=10&access_token=" + accessToken;
+        fetch(feedURL, { method: "GET" })
             .then(res => res.json())
             .then((data) => {
                 return resolve(data)
