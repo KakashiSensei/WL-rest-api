@@ -3159,9 +3159,9 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.1"
 
-wl-parser@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/wl-parser/-/wl-parser-1.0.12.tgz#9853be512a4a302566f60d70b8acd1a42753e886"
+wl-parser@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/wl-parser/-/wl-parser-1.0.13.tgz#ef43e7b3c9df17e8c44cd8e2e403f0d6b2624cd2"
   dependencies:
     gender-detection "^0.0.5"
     isomorphic-fetch "^2.2.1"
