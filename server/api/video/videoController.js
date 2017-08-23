@@ -48,9 +48,7 @@ exports.get = function (req, res, next) {
 exports.post = function (req, res, next) {
     var body = req.body;
 
-    var newVideo = new Video();
-    newVideo.videoID = body['videoID'];
-
+    var newVideo = new Video(body);
     newVideo.save((err, newVideo) => {
         if (err) {
             next(err);

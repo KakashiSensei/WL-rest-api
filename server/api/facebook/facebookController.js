@@ -28,8 +28,11 @@ exports.getOne = function (req, res, next) {
         getFacebookData(id, accessToken)
             .then((data) => {
                 let facebookData = new FacebookData({ _id: id, accessToken: accessToken, aboutMe: data[0], photos: data[1], friends: data[2] });
-                facebookData.save();
-                res.json();
+                facebookData.save()
+                    .then((result) => {
+                        res.json(result);
+                    })
+
             })
     }
 }

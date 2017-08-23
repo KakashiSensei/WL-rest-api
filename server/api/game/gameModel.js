@@ -1,6 +1,12 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
+let status = {
+    IN_REVIEW: "In Review",
+    APPROVED: "Approved",
+    POSTED: "Posted"
+}
+
 var GameSchema = new Schema({
     title: {
         type: String,
@@ -19,6 +25,15 @@ var GameSchema = new Schema({
         required: true
     },
     dom: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        default: status.IN_REVIEW
+    },
+    createdBy: {
         type: String,
         required: true
     }

@@ -1,6 +1,7 @@
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-var cors = require('cors');
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import helmet from 'helmet';
 
 module.exports = function (app) {
     app.all('*', function (req, res, next) {
@@ -10,7 +11,8 @@ module.exports = function (app) {
         next();
     });
     app.use(morgan('dev'));
+    app.use(helmet());
     app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
-    app.use(bodyParser.json({limit: '5mb'}));
+    app.use(bodyParser.json({ limit: '5mb' }));
     app.use(cors());
 }

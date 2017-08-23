@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var api = require('./api');
+import * as api from "./api";
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -8,7 +8,8 @@ mongoose.connect(process.env.MONGODB_URI);
 require('./middleware/appMiddleware')(app);
 
 // defining routes
-app.use('/api', api);
+app.use('/api', api.router);
+app.use('/api', api.privateRouter);
 
 // defining error routes
 
