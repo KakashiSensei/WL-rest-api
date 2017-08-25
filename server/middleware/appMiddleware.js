@@ -2,6 +2,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
+import bearerToken from 'express-bearer-token';
 
 module.exports = function (app) {
     app.all('*', function (req, res, next) {
@@ -12,6 +13,7 @@ module.exports = function (app) {
     });
     app.use(morgan('dev'));
     app.use(helmet());
+    app.use(bearerToken());
     app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
     app.use(bodyParser.json({ limit: '5mb' }));
     app.use(cors());

@@ -1,7 +1,16 @@
 var Video = require("./videoModel");
-var Promise = require('bluebird');
-var mongoose = require("mongoose");
-mongoose.Promise = require('bluebird');
+
+let filterObject = (userInfo) => {
+    let filterObject = {};
+    switch (userInfo.type) {
+        case "developer":
+            filterObject.createdBy = userInfo.email;
+            break;
+        case "admin":
+            break;
+    }
+    return filterObject;
+}
 
 exports.params = function (req, res, next, id) {
     Video.findById(id)
@@ -18,13 +27,14 @@ exports.params = function (req, res, next, id) {
 }
 
 exports.get = function (req, res, next) {
+    let objectFilter = filterObject(req.user);
     let perPage = req.query.pp;
     let pageNumber = req.query.pn;
     if (perPage && pageNumber) {
         perPage = +perPage;
         pageNumber = +pageNumber - 1;
-        Video.count({}, (err, count) => {
-            Video.find({}).skip(pageNumber * perPage).limit(perPage)
+        Video.count(objectFilter, (err, count) => {
+            Video.find(objectFilter).skip(pageNumber * perPage).limit(perPage)
                 .then((videos) => {
                     let data = {};
                     data.items = videos;
@@ -35,7 +45,7 @@ exports.get = function (req, res, next) {
                 })
         });
     } else {
-        Video.find({})
+        Video.find(objectFilter)
             .then((videos) => {
                 res.json(videos);
             }, (err) => {
@@ -47,7 +57,7 @@ exports.get = function (req, res, next) {
 
 exports.post = function (req, res, next) {
     var body = req.body;
-
+    body.createdBy = req.user.email;
     var newVideo = new Video(body);
     newVideo.save((err, newVideo) => {
         if (err) {
@@ -64,8 +74,9 @@ exports.getOne = function (req, res, next) {
 }
 
 exports.putOne = function (req, res, next) {
-    // var object = Video.findById(req.id);
-    Video.findOneAndUpdate({ _id: req.video.id }, req.body, { upsert: true })
+    let objectFilter = filterObject(req.user);
+    objectFilter._id = req.video.id;
+    Video.findOneAndUpdate(objectFilter, req.body, { upsert: true })
         .then((success, err) => {
             if (err) return res.send(500, { error: err });
             return res.json(success);
@@ -73,7 +84,9 @@ exports.putOne = function (req, res, next) {
 }
 
 exports.deleteOne = function (req, res, next) {
-    var deleted = Video.find({ _id: req.video.id }).remove().exec();
+    let objectFilter = filterObject(req.user);
+    objectFilter._id = req.video.id;
+    var deleted = Video.find(objectFilter).remove().exec();
     res.json(deleted);
 }
 

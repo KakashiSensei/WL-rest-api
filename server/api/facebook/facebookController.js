@@ -1,8 +1,4 @@
 var FacebookData = require("./facebookModel");
-var Promise = require("bluebird");
-var fetch = require("isomorphic-fetch");
-var mongoose = require("mongoose");
-mongoose.Promise = require('bluebird');
 
 exports.params = function (req, res, next, id) {
     FacebookData.findById(id)

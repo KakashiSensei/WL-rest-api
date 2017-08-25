@@ -1,6 +1,5 @@
 var FacebookData = require("../facebook/facebookModel");
 var Game = require("../game/gameModel");
-var Promise = require("bluebird");
 
 exports.get = function (req, res, next) {
     let questionID = req.param('id');

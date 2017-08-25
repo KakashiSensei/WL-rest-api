@@ -8,6 +8,7 @@ let resizeImage = require("./resizeImage/resizeImageRoutes");
 let transaction = require("./transaction/transactionRoutes");
 let video = require("./video/videoRoutes");
 let account = require("./account/accountRoutes");
+let website = require("./website/websiteRoutes");
 
 privateRouter.use('/game', gameRoutes);
 privateRouter.use('/facebook', facebookRoutes);
@@ -17,6 +18,7 @@ privateRouter.use('/resizeImage', resizeImage);
 privateRouter.use('/transaction', transaction);
 privateRouter.use('/video', video);
 router.use('/account', account);
+router.use('/website', website);
 
 exports.router = router;
 exports.privateRouter = privateRouter;

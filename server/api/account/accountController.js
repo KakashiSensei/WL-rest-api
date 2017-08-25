@@ -2,11 +2,21 @@ import Account from './accountModel';
 
 exports.addAccountInformation = (req, res, next) => {
     let body = req.body;
-    Account.findOneAndUpdate({ email: req.body.email }, req.body, { upsert: true })
-        .then((success, err) => {
-            if (err) return res.send(500, { error: err });
-            return res.json(success);
-        });
+    Account.find(body.email)
+        .then((account) => {
+            if (account.length === 0) {
+                let account = new Account(body);
+                account.save((err, account) => {
+                    if (err) {
+                        next(err);
+                    } else {
+                        res.json(account);
+                    }
+                })
+            } else {
+                res.json(body);
+            }
+        })
 }
 
 exports.getAccountInformation = (req, res, next) => {
