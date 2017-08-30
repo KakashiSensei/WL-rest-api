@@ -114,7 +114,7 @@ exports.putOne = function (req, res, next) {
         .then((game) => {
             let createdBy = game[0].createdBy;
             let toUpdateWith = req.body;
-            toUpdateWith.createdBy = createdBy;
+            toUpdateWith.createdBy = createdBy || req.user.email;
             Game.findOneAndUpdate(objectFilter, toUpdateWith, { upsert: true })
                 .then((success, err) => {
                     if (err) return res.send(500, { error: err });
