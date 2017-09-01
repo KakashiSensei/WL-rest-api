@@ -1,14 +1,16 @@
-let router = require('express').Router();
-let privateRouter = require('express').Router();
-let gameRoutes = require('./game/gameRoutes');
-let facebookRoutes = require('./facebook/facebookRoutes');
-let awsRoutes = require('./aws/awsRoutes');
-let recommendedRoutes = require("./recommendedGames/recommendedGamesRoutes");
-let resizeImage = require("./resizeImage/resizeImageRoutes");
-let transaction = require("./transaction/transactionRoutes");
-let video = require("./video/videoRoutes");
-let account = require("./account/accountRoutes");
-let website = require("./website/websiteRoutes");
+import express from "express";
+const router = express.Router();
+const privateRouter = express.Router();
+import gameRoutes from './game/gameRoutes';
+import facebookRoutes from './facebook/facebookRoutes';
+import awsRoutes from './aws/awsRoutes';
+import recommendedRoutes from "./recommendedGames/recommendedGamesRoutes";
+import resizeImage from "./resizeImage/resizeImageRoutes";
+import transaction from "./transaction/transactionRoutes";
+import video from "./video/videoRoutes";
+import account from "./account/accountRoutes";
+import website from "./website/websiteRoutes";
+import status from "./status/statusRoutes";
 
 privateRouter.use('/game', gameRoutes);
 privateRouter.use('/facebook', facebookRoutes);
@@ -17,8 +19,10 @@ privateRouter.use('/recommendedGames', recommendedRoutes);
 privateRouter.use('/resizeImage', resizeImage);
 privateRouter.use('/transaction', transaction);
 privateRouter.use('/video', video);
+privateRouter.use('/status', status);
 router.use('/account', account);
 router.use('/website', website);
+
 
 exports.router = router;
 exports.privateRouter = privateRouter;

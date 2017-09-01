@@ -1,4 +1,4 @@
-var Game = require("../game/gameModel");
+import Game from "../game/gameModel";
 
 exports.params = function (req, res, next, id) {
     Game.findById(id)

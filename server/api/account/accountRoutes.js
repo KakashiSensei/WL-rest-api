@@ -1,7 +1,8 @@
-var router = require("express").Router();
-var controller = require("./accountController");
+import express from "express";
+const router = express.Router();
+import controller from "./accountController";
 
 router.route("/")
     .post(controller.addAccountInformation)
 
-module.exports = router;
+export default router;

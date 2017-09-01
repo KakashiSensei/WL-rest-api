@@ -1,20 +1,13 @@
-var logger = require('../../util/logger');
-var rp = require('request-promise');
-var Game = require("./gameModel");
-var fs = require('fs');
-var AWS = require('aws-sdk');
-var path = require('path');
-var childProcess = require('child_process')
-var phantomjs = require('phantomjs-prebuilt')
-var binPath = process.env.NODE_ENV !== 'production' ? path.join(__dirname, "../../../node_modules/phantomjs-prebuilt/bin/phantomjs") : "phantomjs";
-var ParseData = require("wl-parser").default;
-var Transaction = require("../transaction/transactionModel");
-
-var facebookController = require("../facebook/facebookController");
-
-const ABOUT_ME = "getAboutMe";
-const ABOUT_FRIENDS = "getCloseFriends";
-const SIZE = 160;
+import Game, {status} from "./gameModel";
+import fs from 'fs';
+import AWS from 'aws-sdk';
+import path from 'path';
+import childProcess from 'child_process';
+import phantomjs from 'phantomjs-prebuilt';
+import ParseData from "wl-parser";
+import Transaction from "../transaction/transactionModel";
+import facebookController from "../facebook/facebookController";
+let binPath = process.env.NODE_ENV !== 'production' ? path.join(__dirname, "../../../node_modules/phantomjs-prebuilt/bin/phantomjs") : "phantomjs";
 
 AWS.config.update({
     accessKeyId: process.env.S3_ACCESS_KEY,
@@ -22,7 +15,7 @@ AWS.config.update({
     region: process.env.S3_HOSTED_REGION
 });
 
-var s3Bucket = new AWS.S3();
+let s3Bucket = new AWS.S3();
 
 let filterObject = (userInfo) => {
     let filterObject = {};
@@ -79,7 +72,7 @@ exports.get = function (req, res, next) {
 }
 
 exports.post = function (req, res, next) {
-    var body = req.body;
+    let body = req.body;
     let questionObject = {};
     questionObject.title = body.title;
     questionObject.description = body.description;
@@ -88,7 +81,7 @@ exports.post = function (req, res, next) {
     questionObject.dom = body.dom;
     questionObject.createdBy = req.user.email;
 
-    var newGame = new Game(questionObject);
+    let newGame = new Game(questionObject);
     newGame.save((err, newGame) => {
         if (err) {
             next(err);
@@ -99,7 +92,7 @@ exports.post = function (req, res, next) {
 }
 
 exports.getOne = function (req, res, next) {
-    var game = req.game;
+    let game = req.game;
     if (game.createdBy === req.user.email || req.user.type === "admin") {
         res.json(game);
     } else {
@@ -115,6 +108,7 @@ exports.putOne = function (req, res, next) {
             let createdBy = game[0].createdBy;
             let toUpdateWith = req.body;
             toUpdateWith.createdBy = createdBy || req.user.email;
+            toUpdateWith.status = status.DEVELOPING;
             Game.findOneAndUpdate(objectFilter, toUpdateWith, { upsert: true })
                 .then((success, err) => {
                     if (err) return res.send(500, { error: err });
@@ -126,18 +120,18 @@ exports.putOne = function (req, res, next) {
 exports.deleteOne = function (req, res, next) {
     let objectFilter = filterObject(req.user);
     objectFilter._id = req.game.id;
-    var deleted = Game.find(objectFilter).remove().exec();
+    let deleted = Game.find(objectFilter).remove().exec();
     res.json(deleted);
 }
 
 exports.postOne = function (req, res, next) {
-    var startTime = Date.now();
-    var body = req.body;
-    var questionID = body.questionID;
-    var userID = body.userid;
-    var accessToken = body.token;
-    var userData = {};
-    var promiseArray = [];
+    let startTime = Date.now();
+    let body = req.body;
+    let questionID = body.questionID;
+    let userID = body.userid;
+    let accessToken = body.token;
+    let userData = {};
+    let promiseArray = [];
 
     //get the facebook details
     facebookController.updateFacebookData(userID, accessToken)
@@ -145,31 +139,31 @@ exports.postOne = function (req, res, next) {
             console.log("Inside facebookData");
             return Game.findById(questionID)
                 .then((game) => {
-                    var dom = game.dom;
-                    var output = game.outputText;
-                    var parseData = new ParseData(facebookData, Date.now());
+                    let dom = game.dom;
+                    let output = game.outputText;
+                    let parseData = new ParseData(facebookData, Date.now());
                     return parseData.makeConnections().then(() => {
-                        var domElement = parseData.analizeDomElement(dom);
-                        var outputElement = parseData.analizeDomElement(output);
+                        let domElement = parseData.analizeDomElement(dom);
+                        let outputElement = parseData.analizeDomElement(output);
                         return [domElement, outputElement];
                     })
                 })
         })
         .then((arrayOutput) => {
             console.log("inside array output");
-            var newDom = arrayOutput[0];
-            var newOutputDom = arrayOutput[1];
-            var fileNameData = Date.now();
-            var fileName = "image" + fileNameData + ".jpg";
-            var childArgs = [
+            let newDom = arrayOutput[0];
+            let newOutputDom = arrayOutput[1];
+            let fileNameData = Date.now();
+            let fileName = "image" + fileNameData + ".jpg";
+            let childArgs = [
                 path.join(__dirname, '../../../makeImage.js'),
                 newDom,
                 fileName
             ]
             childProcess.execFile(binPath, childArgs, (err, stdout, stderr) => {
                 console.log("Inside python responce");
-                var data = fs.readFileSync(fileName);
-                var stream = {
+                let data = fs.readFileSync(fileName);
+                let stream = {
                     Bucket: process.env.QUIZ_IMAGE,
                     Key: fileName,
                     ACL: 'public-read',
@@ -187,8 +181,8 @@ exports.postOne = function (req, res, next) {
                         console.log("Total time " + startTime + " msec");
                         //delete local file
                         fs.unlink(fileName);
-                        var transactionData = { _id: fileNameData, imageName: fileName, questionID: questionID, outputText: newOutputDom, facebookID: userID };
-                        var transaction = new Transaction(transactionData);
+                        let transactionData = { _id: fileNameData, imageName: fileName, questionID: questionID, outputText: newOutputDom, facebookID: userID };
+                        let transaction = new Transaction(transactionData);
                         return transaction.save()
                             .then((tran) => {
                                 if (res) {

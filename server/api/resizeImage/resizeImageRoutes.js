@@ -1,7 +1,8 @@
-var router = require('express').Router();
-var controller = require('./resizeImageController');
+import express from "express";
+const router = express.Router();
+import controller from './resizeImageController';
 
 router.route("/")
     .post(controller.resizeImage);
 
-module.exports = router;
+export default router;

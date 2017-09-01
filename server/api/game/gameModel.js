@@ -1,13 +1,14 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-let status = {
+export const status = {
+    DEVELOPING: "Developing",
     IN_REVIEW: "In Review",
     APPROVED: "Approved",
     POSTED: "Posted"
 }
 
-var GameSchema = new Schema({
+let GameSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -31,7 +32,7 @@ var GameSchema = new Schema({
     status: {
         type: String,
         required: true,
-        default: status.IN_REVIEW
+        default: status.DEVELOPING
     },
     createdBy: {
         type: String,
@@ -42,4 +43,4 @@ var GameSchema = new Schema({
         timestamps: true
     })
 
-module.exports = mongoose.model("games", GameSchema);
+export default mongoose.model("games", GameSchema);

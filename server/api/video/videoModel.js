@@ -1,5 +1,5 @@
-let mongoose = require("mongoose");
-let Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
 let status = {
     IN_REVIEW: "In Review",
@@ -26,4 +26,4 @@ let VideoSchema = new Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('videos', VideoSchema);
+export default mongoose.model('videos', VideoSchema);

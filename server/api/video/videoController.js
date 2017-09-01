@@ -1,4 +1,4 @@
-var Video = require("./videoModel");
+import Video from "./videoModel";
 
 let filterObject = (userInfo) => {
     let filterObject = {};
@@ -56,9 +56,9 @@ exports.get = function (req, res, next) {
 }
 
 exports.post = function (req, res, next) {
-    var body = req.body;
+    let body = req.body;
     body.createdBy = req.user.email;
-    var newVideo = new Video(body);
+    let newVideo = new Video(body);
     newVideo.save((err, newVideo) => {
         if (err) {
             next(err);
@@ -69,7 +69,7 @@ exports.post = function (req, res, next) {
 }
 
 exports.getOne = function (req, res, next) {
-    var video = req.video;
+    let video = req.video;
     res.json(video);
 }
 
@@ -86,7 +86,7 @@ exports.putOne = function (req, res, next) {
 exports.deleteOne = function (req, res, next) {
     let objectFilter = filterObject(req.user);
     objectFilter._id = req.video.id;
-    var deleted = Video.find(objectFilter).remove().exec();
+    let deleted = Video.find(objectFilter).remove().exec();
     res.json(deleted);
 }
 

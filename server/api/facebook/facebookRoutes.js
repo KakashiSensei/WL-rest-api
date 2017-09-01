@@ -1,5 +1,6 @@
-var router = require("express").Router();
-var controller = require("./facebookController");
+import express from "express";
+const router = express.Router();
+import controller from "./facebookController";
 
 router.param("id", controller.params);
 
@@ -10,4 +11,4 @@ router.route("/")
     .post(controller.post)
     .get(controller.get)
 
-module.exports = router;
+export default router;

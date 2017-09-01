@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-var TransactionSchema = new Schema({
+let TransactionSchema = new Schema({
     _id: {
         type: String,
         required: true
@@ -27,4 +27,4 @@ var TransactionSchema = new Schema({
         timestamps: true
     })
 
-module.exports = mongoose.model("transactions", TransactionSchema);
+export default  mongoose.model("transactions", TransactionSchema);

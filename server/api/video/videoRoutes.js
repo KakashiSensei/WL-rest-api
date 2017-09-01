@@ -1,5 +1,6 @@
-var router = require('express').Router();
-var controller = require('./videoController');
+import express from "express";
+const router = express.Router();
+import controller from './videoController';
 
 router.param("id", controller.params);
 
@@ -13,4 +14,4 @@ router.route("/:id")
     .put(controller.putOne)
     .delete(controller.deleteOne)
 
-module.exports = router;
+export default router;

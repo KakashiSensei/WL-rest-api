@@ -1,5 +1,5 @@
-var FacebookData = require("../facebook/facebookModel");
-var Game = require("../game/gameModel");
+import FacebookData from "../facebook/facebookModel";
+import Game from "../game/gameModel";
 
 exports.get = function (req, res, next) {
     let questionID = req.param('id');

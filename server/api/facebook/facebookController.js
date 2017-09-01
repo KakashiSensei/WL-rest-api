@@ -1,4 +1,4 @@
-var FacebookData = require("./facebookModel");
+import FacebookData from "./facebookModel";
 
 exports.params = function (req, res, next, id) {
     FacebookData.findById(id)

@@ -1,4 +1,4 @@
-var Transaction = require("./transactionModel");
+import Transaction from "./transactionModel";
 
 exports.params = function (req, res, next, id) {
     Transaction.findById(id)

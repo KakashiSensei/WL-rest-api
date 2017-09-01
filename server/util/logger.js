@@ -1,13 +1,13 @@
-require('colors');
-var _ = require('lodash');
-var consoleLog = process.env.LOGGER === 'true' ? console.log.bind(console) : function () { };
-var logger = {
+import 'colors';
+import * as _ from 'lodash';
+const consoleLog = process.env.LOGGER === 'true' ? console.log.bind(console) : function () { };
+const logger = {
     log: function () {
-        var tag = '[ ✨ LOG ✨ ]'.green;
-        var arg = _.toArray(arguments)
+        let tag = '[ ✨ LOG ✨ ]'.green;
+        let arg = _.toArray(arguments)
             .map(function (args) {
                 if (typeof (args) === 'object') {
-                    var string = JSON.stringify(args, null, 2);
+                    let string = JSON.stringify(args, null, 2);
                     return tag + '   ' + string.green;
                 } else {
                     return tag + '   ' + args.green;
@@ -17,16 +17,15 @@ var logger = {
     },
 
     error: function () {
-        var arg = _.toArray(arguments)
+        let arg = _.toArray(arguments)
             .map(function (arg) {
                 arg = arg.stack || arg;
-                var name = arg.name || '[ ❌ ERROR ❌ ]';
-                var log = name.yellow + '  ' + arg.red;
+                let name = arg.name || '[ ❌ ERROR ❌ ]';
+                let log = name.yellow + '  ' + arg.red;
                 return log;
             });
 
         consoleLog.apply(console, arg);
     }
 }
-
-module.exports = logger;
+export default logger;

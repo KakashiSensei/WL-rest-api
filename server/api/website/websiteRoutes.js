@@ -1,5 +1,6 @@
-var router = require('express').Router();
-var controller = require('./websiteController');
+import express from "express";
+const router = express.Router();
+import controller from './websiteController';
 
 router.route("/game")
     .get(controller.getGames)

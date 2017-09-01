@@ -60,7 +60,7 @@ exports.resizeImage = function (req, res, next) {
             let http = url.charAt(4) == 's' ? require("https") : require("http");
             let options = nodeUrl.parse(url);
             http.get(options, (response) => {
-                var chunks = [];
+                let chunks = [];
                 response.on('data', function (chunk) {
                     chunks.push(chunk);
                 }).on('end', function () {

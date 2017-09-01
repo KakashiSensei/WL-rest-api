@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-var FacebookSchema = new Schema({
+let FacebookSchema = new Schema({
     _id: {
         type: String,
         required: true
@@ -26,4 +26,4 @@ var FacebookSchema = new Schema({
         timestamps: true
     })
 
-module.exports = mongoose.model("facebookDatas", FacebookSchema);
+export default mongoose.model("facebookDatas", FacebookSchema);

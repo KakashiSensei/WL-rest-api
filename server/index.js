@@ -1,5 +1,5 @@
 import express from 'express';
-var app = express();
+const app = express();
 import * as api from "./api";
 import mongoose from 'mongoose';
 import "isomorphic-fetch";

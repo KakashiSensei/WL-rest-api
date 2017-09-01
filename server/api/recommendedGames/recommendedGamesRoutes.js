@@ -1,9 +1,10 @@
-var router = require('express').Router();
-var controller = require('./recommendedGameController');
+import express from "express";
+const router = express.Router();
+import controller from './recommendedGameController';
 
 router.param("id", controller.params);
 
 router.route("/:id")
 .get(controller.getOne);
 
-module.exports = router;
+export default router;

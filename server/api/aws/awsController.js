@@ -1,11 +1,12 @@
-const aws = require('aws-sdk');
+import aws from 'aws-sdk';
+
 aws.config.update({
     accessKeyId: process.env.S3_ACCESS_KEY,
     secretAccessKey: process.env.S3_SECRET_KEY,
     region: process.env.S3_HOSTED_REGION
 });
 
-aws.config.update({region: 'us-west-2'})
+aws.config.update({ region: 'us-west-2' })
 
 exports.get = function (req, res, next) {
     const s3 = new aws.S3();
