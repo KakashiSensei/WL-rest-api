@@ -44,6 +44,7 @@ exports.params = function (req, res, next, id) {
 }
 
 exports.get = function (req, res, next) {
+    console.log("User", req.user);
     let objectFilter = filterObject(req.user);
     let perPage = req.query.pp;
     let pageNumber = req.query.pn;
