@@ -2,8 +2,9 @@ import Account from './accountModel';
 
 exports.addAccountInformation = (req, res, next) => {
     let body = req.body;
-    console.log("inisde addAccountInformation")
-    Account.find(body.email)
+    console.log("inside addAccountInformation");
+    console.log("Print body", body);
+    Account.find({"email": body.email})
         .then((account) => {
             console.log("New account", account);
             if (account.length === 0) {
