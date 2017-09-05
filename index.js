@@ -3,7 +3,7 @@ var app = require('./dist');
 var logger = require('./dist/util/logger').default;
 global.Promise = require('bluebird')
 require('isomorphic-fetch');
-require('newrelic');
+// require('newrelic');
 var mongoose = require("mongoose");
 mongoose.Promise = require('bluebird');
 
