@@ -5,8 +5,10 @@ exports.addAccountInformation = (req, res, next) => {
     console.log("inisde addAccountInformation")
     Account.find(body.email)
         .then((account) => {
+            console.log("New account", account);
             if (account.length === 0) {
                 let account = new Account(body);
+                console.log("Adding new account", body);
                 account.save((err, account) => {
                     if (err) {
                         next(err);

@@ -2,12 +2,17 @@ import Video from "./videoModel";
 
 let filterObject = (userInfo) => {
     let filterObject = {};
-    switch (userInfo.type) {
-        case "developer":
-            filterObject.createdBy = userInfo.email;
-            break;
-        case "admin":
-            break;
+    if (userInfo === undefined) {
+        console.log("Adding fake email address");
+        filterObject.createdBy = "";
+    } else {
+        switch (userInfo.type) {
+            case "developer":
+                filterObject.createdBy = userInfo.email;
+                break;
+            case "admin":
+                break;
+        }
     }
     return filterObject;
 }
