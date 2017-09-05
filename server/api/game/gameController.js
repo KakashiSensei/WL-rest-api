@@ -20,6 +20,7 @@ let s3Bucket = new AWS.S3();
 let filterObject = (userInfo) => {
     let filterObject = {};
     if (userInfo === undefined) {
+        console.log("Adding fake email address");
         filterObject.createdBy = "";
     } else {
         switch (userInfo.type) {
