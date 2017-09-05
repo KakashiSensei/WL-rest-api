@@ -1,6 +1,6 @@
 var config = require('dotenv').config();
 var app = require('./dist');
-var logger = require('./dist/util/logger');
+var logger = require('./dist/util/logger').default;
 global.Promise = require('bluebird')
 require('isomorphic-fetch');
 require('newrelic');

@@ -1,8 +1,9 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from './resizeImageController';
 
-router.route("/")
-    .post(controller.resizeImage);
-
-export default router;
+export default () => {
+    let router = Router();
+    router.route("/")
+        .post(controller.resizeImage);
+    return router;
+}

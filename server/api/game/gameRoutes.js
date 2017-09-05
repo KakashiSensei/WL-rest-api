@@ -1,17 +1,20 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from './gameController';
 
-router.param("id", controller.params);
 
-router.route("/")
-    .get(controller.get)
-    .post(controller.post)
+export default () => {
+    let router = Router();
+    router.param("id", controller.params);
 
-router.route("/:id")
-    .get(controller.getOne)
-    .post(controller.postOne)
-    .put(controller.putOne)
-    .delete(controller.deleteOne)
+    router.route("/")
+        .get(controller.get)
+        .post(controller.post)
 
-export default router;
+    router.route("/:id")
+        .get(controller.getOne)
+        .post(controller.postOne)
+        .put(controller.putOne)
+        .delete(controller.deleteOne)
+
+    return router;
+}

@@ -1,14 +1,16 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from './websiteController';
 
-router.route("/game")
-    .get(controller.getGames)
+export default () => {
+    let router = Router();
+    router.route("/game")
+        .get(controller.getGames)
 
-router.route("/video")
-    .get(controller.getVideos)
+    router.route("/video")
+        .get(controller.getVideos)
 
-router.route("/game/:id")
-    .get(controller.getOneGame)
+    router.route("/game/:id")
+        .get(controller.getOneGame)
 
-module.exports = router;
+    return router;
+}

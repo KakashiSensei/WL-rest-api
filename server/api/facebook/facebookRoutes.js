@@ -1,14 +1,16 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from "./facebookController";
 
-router.param("id", controller.params);
+export default () => {
+    let router = Router();
+    router.param("id", controller.params);
 
-router.route("/:id")
-    .get(controller.getOne)
+    router.route("/:id")
+        .get(controller.getOne)
 
-router.route("/")
-    .post(controller.post)
-    .get(controller.get)
+    router.route("/")
+        .post(controller.post)
+        .get(controller.get)
 
-export default router;
+    return router;
+}

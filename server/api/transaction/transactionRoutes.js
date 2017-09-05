@@ -1,10 +1,12 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from './transactionController';
 
-router.param("id", controller.params);
+export default () => {
+    let router = Router();
+    router.param("id", controller.params);
 
-router.route("/:id")
-    .get(controller.getTransaction);
+    router.route("/:id")
+        .get(controller.getTransaction);
 
-export default router;
+    return router;
+}

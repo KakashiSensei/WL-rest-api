@@ -12,16 +12,16 @@ import account from "./account/accountRoutes";
 import website from "./website/websiteRoutes";
 import status from "./status/statusRoutes";
 
-privateRouter.use('/game', gameRoutes);
-privateRouter.use('/facebook', facebookRoutes);
-privateRouter.use('/aws', awsRoutes);
-privateRouter.use('/recommendedGames', recommendedRoutes);
-privateRouter.use('/resizeImage', resizeImage);
-privateRouter.use('/transaction', transaction);
-privateRouter.use('/video', video);
-privateRouter.use('/status', status);
-router.use('/account', account);
-router.use('/website', website);
+privateRouter.use('/game', gameRoutes());
+privateRouter.use('/facebook', facebookRoutes());
+privateRouter.use('/aws', awsRoutes());
+privateRouter.use('/recommendedGames', recommendedRoutes());
+privateRouter.use('/resizeImage', resizeImage());
+privateRouter.use('/transaction', transaction());
+privateRouter.use('/video', video());
+privateRouter.use('/status', status());
+router.use('/account', account());
+router.use('/website', website());
 
 
 exports.router = router;

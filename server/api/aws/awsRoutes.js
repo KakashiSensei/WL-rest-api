@@ -1,8 +1,9 @@
-import express from "express";
-const router = express.Router();
+import { Router } from "express";
 import controller from "./awsController";
 
-router.route("/")
-    .get(controller.get)
-
-export default router;
+export default () => {
+    let router = Router();
+    router.route("/")
+        .get(controller.get)
+    return router;
+}

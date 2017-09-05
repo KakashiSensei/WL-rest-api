@@ -1,8 +1,10 @@
-import express from "express";
-const router = express.Router();
+import { Router } from 'express';
 import controller from "./accountController";
 
-router.route("/")
-    .post(controller.addAccountInformation)
+export default () => {
+    let router = Router();
+    router.route("/")
+        .post(controller.addAccountInformation)
 
-export default router;
+    return router;
+}

@@ -2,6 +2,7 @@ import Account from './accountModel';
 
 exports.addAccountInformation = (req, res, next) => {
     let body = req.body;
+    console.log("inisde addAccountInformation")
     Account.find(body.email)
         .then((account) => {
             if (account.length === 0) {
@@ -14,7 +15,8 @@ exports.addAccountInformation = (req, res, next) => {
                     }
                 })
             } else {
-                res.json(body);
+                console.log(account[0]);
+                res.json(account[0]);
             }
         })
 }
