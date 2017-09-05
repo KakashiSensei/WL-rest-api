@@ -1,4 +1,4 @@
-import Game, {status} from "./gameModel";
+import Game, { status } from "./gameModel";
 import fs from 'fs';
 import AWS from 'aws-sdk';
 import path from 'path';
@@ -19,12 +19,16 @@ let s3Bucket = new AWS.S3();
 
 let filterObject = (userInfo) => {
     let filterObject = {};
-    switch (userInfo.type) {
-        case "developer":
-            filterObject.createdBy = userInfo.email;
-            break;
-        case "admin":
-            break;
+    if (userInfo === undefined) {
+        filterObject.createdBy = "";
+    } else {
+        switch (userInfo.type) {
+            case "developer":
+                filterObject.createdBy = userInfo.email;
+                break;
+            case "admin":
+                break;
+        }
     }
     return filterObject;
 }
@@ -44,7 +48,6 @@ exports.params = function (req, res, next, id) {
 }
 
 exports.get = function (req, res, next) {
-    console.log("User", req.user);
     let objectFilter = filterObject(req.user);
     let perPage = req.query.pp;
     let pageNumber = req.query.pn;
