@@ -3332,9 +3332,9 @@ widest-line@^1.0.0:
   dependencies:
     string-width "^1.0.1"
 
-wl-parser@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.yarnpkg.com/wl-parser/-/wl-parser-1.0.19.tgz#b497d93e73d5d8c6618c9782508cd868357bed9e"
+wl-parser@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/wl-parser/-/wl-parser-1.0.20.tgz#53cb1333d88672e69a361e41afc1114c9f648a83"
   dependencies:
     gender-detection "^0.0.5"
     isomorphic-fetch "^2.2.1"
