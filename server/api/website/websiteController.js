@@ -9,7 +9,9 @@ exports.getGames = function (req, res, next) {
         perPage = +perPage;
         pageNumber = +pageNumber - 1;
         Game.count(filterObject, (err, count) => {
-            Game.find(filterObject).skip(pageNumber * perPage).limit(perPage)
+            Game.find(filterObject)
+            .sort({updatedAt: 'descending'})
+            .skip(pageNumber * perPage).limit(perPage)
                 .then((games) => {
                     let data = {};
                     data.items = games;
@@ -21,6 +23,7 @@ exports.getGames = function (req, res, next) {
         });
     } else {
         Game.find(filterObject)
+            .sort(updatedAt, 'descending')
             .then((games) => {
                 res.json(games);
             }, (err) => {

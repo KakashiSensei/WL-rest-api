@@ -18,6 +18,7 @@ exports.getOne = function (req, res, next) {
     let filterObject = {"status": status.APPROVED};
     Game.count(filterObject, (err, count) => {
         let skip = Math.floor((count - 1) / num) - 1;
+        skip = Math.floor(Math.random() * skip);
         filterObject._id = { $ne: req.game._id };
         Game.find(filterObject).skip(skip * num).limit(num)
             .then((data) => {
