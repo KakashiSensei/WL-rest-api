@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-import {status} from "../../util/constants";
+import { status } from "../../util/constants";
 
 let GameSchema = new Schema({
     title: {

@@ -1,4 +1,5 @@
-import Game, {status} from "../game/gameModel";
+import Game from "../game/gameModel";
+import { status } from "../../util/constants";
 
 exports.params = function (req, res, next, id) {
     Game.findById(id)
@@ -15,7 +16,7 @@ exports.params = function (req, res, next, id) {
 
 exports.getOne = function (req, res, next) {
     let num = +req.query.num;
-    let filterObject = {"status": status.APPROVED};
+    let filterObject = { "status": status.APPROVED };
     Game.count(filterObject, (err, count) => {
         let skip = Math.floor((count - 1) / num) - 1;
         skip = Math.floor(Math.random() * skip);
