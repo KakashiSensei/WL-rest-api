@@ -1,12 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-
-export const status = {
-    DEVELOPING: "Developing",
-    IN_REVIEW: "In Review",
-    APPROVED: "Approved",
-    POSTED: "Posted"
-}
+import {status} from "../../util/constants";
 
 let GameSchema = new Schema({
     title: {

@@ -1,4 +1,5 @@
-import Game, { status } from "./gameModel";
+import Game from "./gameModel";
+import { status } from "../../util/constants";
 import fs from 'fs';
 import AWS from 'aws-sdk';
 import path from 'path';

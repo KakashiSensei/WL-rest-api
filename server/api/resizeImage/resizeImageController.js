@@ -15,6 +15,8 @@ exports.resizeImage = function (req, res, next) {
     let type = req.body.type;
     let maxWidth = req.body.maxWidth;
     let maxHeight = req.body.maxHeight;
+    let facebookPost = req.body.facebookPost;
+
     if (width && height) {
         width = +width.replace("px", "");
         height = +height.replace("px", "");
@@ -71,6 +73,18 @@ exports.resizeImage = function (req, res, next) {
                 });
             });
         }
+    } else if (facebookPost) {
+        let bufferData = new Buffer(data, 'base64');
+        let source = tinify.fromBuffer(bufferData);
+        source.store({
+            service: "s3",
+            aws_access_key_id: process.env.S3_ACCESS_KEY,
+            aws_secret_access_key: process.env.S3_SECRET_KEY,
+            region: process.env.S3_HOSTED_REGION,
+            path: `${process.env.POST_IMAGE}/postImage${Date.now()}.png`
+        }).meta().then((meta) => {
+            res.json(meta);
+        })
     }
 }
 

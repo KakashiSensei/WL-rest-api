@@ -1,5 +1,5 @@
 import { Router } from "express";
-import controller from './gameController';
+import controller from './postImageController';
 
 export default () => {
     let router = Router();
@@ -9,11 +9,12 @@ export default () => {
         .get(controller.get)
         .post(controller.post)
 
+    router.route("/lastTime")
+        .get(controller.getLastTime)
+
     router.route("/:id")
         .get(controller.getOne)
-        .post(controller.postOne)
         .put(controller.putOne)
         .delete(controller.deleteOne)
-
     return router;
 }
