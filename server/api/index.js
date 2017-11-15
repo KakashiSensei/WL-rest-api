@@ -11,7 +11,8 @@ import video from "./video/videoRoutes";
 import account from "./account/accountRoutes";
 import website from "./website/websiteRoutes";
 import status from "./status/statusRoutes";
-import postImage from "./postImage/postImageRoutes"
+import postImage from "./postImage/postImageRoutes";
+import editableQuote from "./editableQuote/editableQuoteRoutes";
 
 privateRouter.use('/game', gameRoutes());
 privateRouter.use('/facebook', facebookRoutes());
@@ -22,9 +23,9 @@ privateRouter.use('/transaction', transaction());
 privateRouter.use('/video', video());
 privateRouter.use('/status', status());
 privateRouter.use('/postImage', postImage());
+privateRouter.use('/editableQuote', editableQuote());
 router.use('/account', account());
 router.use('/website', website());
-
 
 exports.router = router;
 exports.privateRouter = privateRouter;
