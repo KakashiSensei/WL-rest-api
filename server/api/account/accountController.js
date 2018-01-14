@@ -2,14 +2,11 @@ import Account from './accountModel';
 
 exports.addAccountInformation = (req, res, next) => {
     let body = req.body;
-    console.log("inside addAccountInformation");
-    console.log("Print body", body);
-    Account.find({"email": body.email})
+    Account.find({ "email": body.email })
         .then((account) => {
-            console.log("New account", account);
+            // console.log("New account", account);
             if (account.length === 0) {
                 let account = new Account(body);
-                console.log("Adding new account", body);
                 account.save((err, account) => {
                     if (err) {
                         next(err);
@@ -18,7 +15,6 @@ exports.addAccountInformation = (req, res, next) => {
                     }
                 })
             } else {
-                console.log(account[0]);
                 res.json(account[0]);
             }
         })

@@ -11,6 +11,17 @@ let PostImageSchema = new Schema({
         type: String,
         required: true
     },
+    quote: {
+        type: String,
+        required: true
+    },
+    author: {
+        type: String
+    },
+    dom: {
+        type: String,
+        required: true
+    },
     photoID: {
         type: String
     },
@@ -19,6 +30,9 @@ let PostImageSchema = new Schema({
     },
     postTime: {
         type: Number
+    },
+    postStructure: {
+        type: Object
     },
     status: {
         type: String,

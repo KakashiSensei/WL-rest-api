@@ -18,7 +18,7 @@ let filterObject = (userInfo) => {
     return filterObject;
 }
 
-exports.params = function (req, res, next, id) {
+exports.params = (req, res, next, id) => {
     PostImage.findById(id)
         .then((postImage) => {
             if (!postImage) {
@@ -32,7 +32,7 @@ exports.params = function (req, res, next, id) {
         })
 }
 
-exports.get = function (req, res, next) {
+exports.get = (req, res, next) => {
     let objectFilter = filterObject(req.user);
     let perPage = req.query.pp;
     let pageNumber = req.query.pn;
@@ -60,11 +60,14 @@ exports.get = function (req, res, next) {
     }
 }
 
-exports.post = function (req, res, next) {
+exports.post = (req, res, next) => {
     let body = req.body;
     let postImageObject = {};
     postImageObject.imageUrl = body.imageUrl;
     postImageObject.createdBy = req.user.email;
+    postImageObject.dom = body.dom;
+    postImageObject.quote = body.quote;
+    postImageObject.author = body.author;
 
     let newPostImage = new PostImage(postImageObject);
     newPostImage.save((err, postImage) => {
@@ -76,15 +79,16 @@ exports.post = function (req, res, next) {
     })
 }
 
-exports.getOne = function (req, res, next) {
+exports.getOne = (req, res, next) => {
     let postImage = req.postImage;
+    console.log("postImage", postImage);
     if (postImage.createdBy === req.user.email || req.user.type === "admin") {
         res.json(postImage);
     } else {
         next(new Error("Not Authorised to view"));
     }
 }
-exports.putOne = function (req, res, next) {
+exports.putOne = (req, res, next) => {
     let objectFilter = filterObject(req.user);
     objectFilter._id = req.postImage.id;
     PostImage.find(objectFilter)
@@ -101,17 +105,17 @@ exports.putOne = function (req, res, next) {
         })
 }
 
-exports.getLastTime = function (req, res, next) {
+exports.getLastTime = (req, res, next) => {
     let objectFilter = filterObject(req.user);
     PostImage.findOne(objectFilter)
-        .sort({"postTime": -1})
+        .sort({ "postTime": -1 })
         .exec((err, doc) => {
             console.log(doc);
             res.json(doc);
         })
 }
 
-exports.deleteOne = function (req, res, next) {
+exports.deleteOne = (req, res, next) => {
     let objectFilter = filterObject(req.user);
     objectFilter._id = req.postImage.id;
     let deleted = PostImage.find(objectFilter).remove().exec();

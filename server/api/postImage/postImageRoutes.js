@@ -16,5 +16,6 @@ export default () => {
         .get(controller.getOne)
         .put(controller.putOne)
         .delete(controller.deleteOne)
+
     return router;
 }
